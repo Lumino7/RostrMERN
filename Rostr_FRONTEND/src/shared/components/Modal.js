@@ -34,7 +34,7 @@ const Modal = ({
     } else {
       dialog.close();
     }
-  }, [showModal]);
+  }, [showModal, initialFormData]);
 
   // Optional: Handle the "Esc" key or Backdrop click native 'close' event
   const handleNativeClose = (e) => {
@@ -132,8 +132,8 @@ const Modal = ({
     setUpdatedShifts((prev) => {
       const index = prev.findIndex(
         (prevUpdatedShift) =>
-          prevUpdatedShift.user == submittedShift.user &&
-          new Date(prevUpdatedShift.date).toDateString() ==
+          prevUpdatedShift.user === submittedShift.user &&
+          new Date(prevUpdatedShift.date).toDateString() ===
             new Date(submittedShift.date).toDateString(),
       );
       if (index !== -1) {

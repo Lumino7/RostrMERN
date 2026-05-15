@@ -12,8 +12,8 @@ const ShiftCell = (props) => {
 
   const matchingUpdatedShift = updatedShifts.find((updatedShift) => {
     return (
-      updatedShift.user == props.shiftUserId &&
-      new Date(updatedShift.date).toDateString() ==
+      updatedShift.user === props.shiftUserId &&
+      new Date(updatedShift.date).toDateString() ===
         new Date(props.shiftCellDate).toDateString()
     );
   });

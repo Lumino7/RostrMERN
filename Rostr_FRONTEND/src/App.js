@@ -1,4 +1,4 @@
-import React, { useContext, Suspense } from "react";
+import React, { useContext } from "react";
 import {
   BrowserRouter as Router,
   Route,
@@ -6,7 +6,6 @@ import {
   Navigate,
 } from "react-router-dom";
 import "./App.css";
-import NavBar from "./shared/components/NavBar";
 import AuthPage from "./user/pages/AuthPage";
 import SchedulePage from "./shift/pages/SchedulePage";
 import { RostrContext, RostrProvider } from "./shared/context/rostr-context";

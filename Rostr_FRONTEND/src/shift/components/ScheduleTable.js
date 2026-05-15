@@ -17,7 +17,7 @@ const ScheduleTable = (props) => {
       event.preventDefault();
 
       try {
-        await fetch("http://localhost:5000/api/shifts/batch", {
+        await fetch(`${process.env.REACT_APP_BACKEND_URL}/shifts/batch`, {
           method: "PUT",
           headers: {
             "Content-Type": "application/json",

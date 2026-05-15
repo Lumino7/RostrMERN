@@ -1,6 +1,7 @@
 import React, { useState, useContext, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { RostrContext } from "../../shared/context/rostr-context";
+import { useCallback } from "react";
 
 const AuthPage = () => {
   const {
@@ -53,13 +54,16 @@ const AuthPage = () => {
     const isInputsValid = validateInputs();
     if (isRegMode && isInputsValid) {
       try {
-        const response = await fetch("http://localhost:5000/api/users/signup", {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
+        const response = await fetch(
+          `${process.env.REACT_APP_BACKEND_URL}/api/users/signup`,
+          {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify(formData),
           },
-          body: JSON.stringify(formData),
-        });
+        );
         if (response.ok) {
           alert("Registration successful!");
           const responseData = await response.json();
@@ -73,13 +77,16 @@ const AuthPage = () => {
       }
     } else if (!isRegMode && isInputsValid) {
       try {
-        const response = await fetch("http://localhost:5000/api/users/login", {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
+        const response = await fetch(
+          `${process.env.REACT_APP_BACKEND_URL}/users/login`,
+          {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify(formData),
           },
-          body: JSON.stringify(formData),
-        });
+        );
         if (response.ok) {
           alert("Login successful!");
           const responseData = await response.json();
@@ -94,29 +101,32 @@ const AuthPage = () => {
     }
   };
 
-  const login = (data) => {
-    setToken(data.token);
+  const login = useCallback(
+    (data) => {
+      setToken(data.token);
 
-    setActiveUser((prev) => {
-      return {
-        ...prev,
-        userId: data.userId,
-        userRole: data.userRole,
-        userFirstName: data.userFirstName,
-      };
-    });
-    localStorage.setItem(
-      "userData",
-      JSON.stringify({
-        userId: data.userId,
-        userRole: data.userRole,
-        userFirstName: data.userFirstName,
-        token: data.token,
-      }),
-    );
-    setIsLoggedIn(!!data.token);
-    navigate("/schedule");
-  };
+      setActiveUser((prev) => {
+        return {
+          ...prev,
+          userId: data.userId,
+          userRole: data.userRole,
+          userFirstName: data.userFirstName,
+        };
+      });
+      localStorage.setItem(
+        "userData",
+        JSON.stringify({
+          userId: data.userId,
+          userRole: data.userRole,
+          userFirstName: data.userFirstName,
+          token: data.token,
+        }),
+      );
+      setIsLoggedIn(!!data.token);
+      navigate("/schedule");
+    },
+    [navigate, setActiveUser, setIsLoggedIn, setToken],
+  );
 
   useEffect(() => {
     const storedData = JSON.parse(localStorage.getItem("userData"));

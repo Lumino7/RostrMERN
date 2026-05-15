@@ -2,7 +2,7 @@ import { useContext, useEffect, useState } from "react";
 import { RostrContext } from "../../shared/context/rostr-context";
 import ShiftCell from "./ShiftCell";
 
-const TableBody = ({}) => {
+const TableBody = () => {
   let context = useContext(RostrContext);
   const { activeUser, weekStart, setWeekStart, refreshTrigger } = context;
   const [loadedShifts, setLoadedShifts] = useState();
@@ -28,7 +28,7 @@ const TableBody = ({}) => {
       //   console.log(`dateFrom=${encodeURIComponent(dateFrom)}`);
       //   console.log(`dateTo=${encodeURIComponent(dateTo)}`);
 
-      const url = `http://localhost:5000/api/shifts?dateFrom=${encodeURIComponent(dateFrom)}&dateTo=${encodeURIComponent(dateTo)}`;
+      const url = `${process.env.REACT_APP_BACKEND_URL}/shifts?dateFrom=${encodeURIComponent(dateFrom)}&dateTo=${encodeURIComponent(dateTo)}`;
 
       try {
         const response = await fetch(url);
@@ -44,7 +44,9 @@ const TableBody = ({}) => {
   useEffect(() => {
     const fetchUsers = async () => {
       try {
-        const response = await fetch("http://localhost:5000/api/users");
+        const response = await fetch(
+          `${process.env.REACT_APP_BACKEND_URL}/users`,
+        );
         const responseData = await response.json();
         setLoadedUsers(responseData.users);
         // console.log("here");
@@ -66,8 +68,8 @@ const TableBody = ({}) => {
         for (let i = 0; i < 7; i++) {
           formattedShiftRow[`shift${i}`] = loadedShifts.find(
             (shift) =>
-              shift.user.id == user.id &&
-              new Date(shift.date).toDateString() == week[i].toDateString(),
+              shift.user.id === user.id &&
+              new Date(shift.date).toDateString() === week[i].toDateString(),
           );
         }
       }
