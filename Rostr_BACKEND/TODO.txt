@@ -1,0 +1,30 @@
+22Mar
+Just finished the Schema/Models,
+continue the routes/controllers
+
+24Mar
+-Currently in users-controllers, finish up signup and login
+
+25Mar
+-Finish shifts-routes
+
+26Mar
+-Finish shifts-controllers, finish Shift model 
+
+27Mar
+-Re-do createShift and other functions to accept an array of shift objects
+-EditShift onward
+
+30Mar
+-finished backend?
+-server wont start!
+
+31Mar
+- It's workingggg!
+- Fixed UTC to local date bugs
+
+01Apr
+- Polishing MERN Notes, on Express-Validator
+
+02Apr
+- Finished MERN Notes, started on the Frontend
