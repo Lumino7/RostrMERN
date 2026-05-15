@@ -29,12 +29,11 @@ const Modal = ({
     if (!dialog) return;
 
     if (showModal) {
-      setFormData(initialFormData);
       dialog.showModal();
     } else {
       dialog.close();
     }
-  }, [showModal, initialFormData]);
+  }, [showModal]);
 
   // Optional: Handle the "Esc" key or Backdrop click native 'close' event
   const handleNativeClose = (e) => {
