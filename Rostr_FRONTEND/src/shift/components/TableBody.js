@@ -68,7 +68,7 @@ const TableBody = () => {
         for (let i = 0; i < 7; i++) {
           formattedShiftRow[`shift${i}`] = loadedShifts.find(
             (shift) =>
-              shift.user.id === user.id &&
+              shift.user?.id === user.id &&
               new Date(shift.date).toDateString() === week[i].toDateString(),
           );
         }

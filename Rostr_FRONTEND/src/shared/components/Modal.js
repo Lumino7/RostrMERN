@@ -25,6 +25,15 @@ const Modal = ({
   const [formData, setFormData] = useState(initialFormData);
 
   useEffect(() => {
+    setFormData({
+      start: shift ? formatTime(shift.start) : "",
+      end: shift ? formatTime(shift.end) : "",
+      isOnCall: shift?.type === "on-call" || false,
+      isOff: shift?.type === "off" || false,
+    });
+  }, [shift, shiftCellDate]);
+
+  useEffect(() => {
     const dialog = dialogRef.current;
     if (!dialog) return;
 
