@@ -15,6 +15,8 @@ const AuthPage = () => {
 
   const [isRegMode, setIsRegMode] = useState(false);
 
+  const [isLoading, setIsLoading] = useState(false);
+
   const [formData, setFormData] = useState(
     isRegMode
       ? { email: "", password: "", firstName: "", lastName: "" }
@@ -52,6 +54,7 @@ const AuthPage = () => {
   const handleSubmit = async (event) => {
     event.preventDefault();
     const isInputsValid = validateInputs();
+    setIsLoading(true);
     if (isRegMode && isInputsValid) {
       try {
         const response = await fetch(
@@ -65,6 +68,7 @@ const AuthPage = () => {
           },
         );
         if (response.ok) {
+          setIsLoading(false);
           alert("Registration successful!");
           const responseData = await response.json();
           login(responseData);
@@ -74,6 +78,8 @@ const AuthPage = () => {
         }
       } catch (err) {
         alert(err);
+      } finally {
+        setIsLoading(false);
       }
     } else if (!isRegMode && isInputsValid) {
       try {
@@ -88,6 +94,7 @@ const AuthPage = () => {
           },
         );
         if (response.ok) {
+          setIsLoading(false);
           alert("Login successful!");
           const responseData = await response.json();
           login(responseData);
@@ -97,6 +104,8 @@ const AuthPage = () => {
         }
       } catch (err) {
         alert(err);
+      } finally {
+        setIsLoading(false);
       }
     }
   };
@@ -202,11 +211,20 @@ const AuthPage = () => {
               </div>
             </>
           )}
-          <input
-            className="btn btn-primary"
-            type="submit"
-            value={authButtonValue}
-          />
+          <button className="btn btn-primary" type="submit">
+            {isLoading ? (
+              <>
+                <span
+                  className="spinner-border spinner-border-sm me-2"
+                  role="status"
+                  aria-hidden="true"
+                ></span>
+                Connecting...
+              </>
+            ) : (
+              authButtonValue
+            )}
+          </button>
         </form>
       </div>
 
